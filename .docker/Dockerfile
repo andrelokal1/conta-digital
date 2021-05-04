@@ -16,9 +16,6 @@ RUN apt-get update; \
     && docker-php-ext-enable xdebug \
     && echo "xdebug.idekey=docker" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && docker-php-ext-enable soap \
-    && curl -sL https://deb.nodesource.com/setup_9.x | bash - \
-    && apt-get install -y nodejs \
-    && curl -L https://www.npmjs.com/install.sh | sh \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer \
     && chown -R www-data:www-data /var/www/html \
     && a2enmod rewrite && service apache2 restart

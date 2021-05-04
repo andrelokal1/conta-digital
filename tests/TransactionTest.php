@@ -2,80 +2,61 @@
 
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
-use App\Models\Clientes;
+use App\Models\User;
 
 class TransactionTest extends TestCase
 {
 
-    public function testCriarCliente()
+    private $userPF;
+    private $userPJ;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->userPF = factory(User::class)->create(['type_user'=>'PF']);
+        $this->userPJ = factory(User::class)->create(['type_user'=>'PJ']);
+    }
+
+    public function testTransactionPftoPj()
     {
         $params = [
-            'email' => 'test@test.com',
-            'nome' => 'Test',
-            'sobrenome' => 'Tested'
+            'value' => '100',
+            'payer' => $this->userPF->id,
+            'payee' => $this->userPJ->id
         ];
 
-        /*
-        * test POST json response 201
-        */
-        $response = $this->call('POST', '/clientes', $params);
+        $response = $this->call('POST', '/transaction', $params);
         $json = json_decode($response->getContent());
         $this->assertResponseStatus(201);
 
-        /*
-         * test database data
-         */
-        $cliente = Clientes::where('email', 'test@test.com')->first();
-        $this->assertTrue(!empty($cliente));
-        $this->assertTrue(isset($cliente->email));
-        $this->assertEquals('test@test.com', $cliente->email);
     }
 
-    public function testAlterarCliente()
+    public function testTransactionPjtoPf()
     {
-        /*
-        * test PUT response 200
-        */
-        $id_cliente = Clientes::max('id');
-
         $params = [
-            'id' => $id_cliente,
-            'email' => 'test_1@test.com',
-            'nome' => 'Test1',
-            'sobrenome' => 'Tested1'
+            'value' => '100',
+            'payer' => $this->userPJ->id,
+            'payee' => $this->userPF->id
         ];
 
-        $response = $this->call('PUT', '/clientes', $params);
-        $this->assertEquals(200, $response->status());
+        $response = $this->call('POST', '/transaction', $params);
+        $json = json_decode($response->getContent());
+        $this->assertResponseStatus(422);
+
     }
 
-    public function testListarClientes()
+    public function testTransactionSameUser()
     {
-        /*
-        * test GET response 200
-        */
-        $response = $this->call('GET', '/clientes');
-        $this->assertEquals(200, $response->status());
-    }
+        $params = [
+            'value' => '100',
+            'payer' => $this->userPF->id,
+            'payee' => $this->userPF->id
+        ];
 
-    public function testListarCliente()
-    {
-        /*
-        * test GET response 200
-        */
-        $id_cliente = Clientes::max('id');
-        $response = $this->call('GET', '/clientes/'.$id_cliente);
-        $this->assertEquals(200, $response->status());
-    }
+        $response = $this->call('POST', '/transaction', $params);
+        $json = json_decode($response->getContent());
+        $this->assertResponseStatus(422);
 
-    public function testDeletarClientes()
-    {
-        /*
-        * test DELETE response 200
-        */
-        $id_cliente = Clientes::max('id');
-        $response = $this->call('DELETE','/clientes/'.$id_cliente);
-        $this->assertEquals(200, $response->getStatusCode());
     }
 
 }

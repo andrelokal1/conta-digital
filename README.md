@@ -1,24 +1,41 @@
-# Lumen PHP Framework
+# Projeto Teste : Menu
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+Este Projeto é um teste e não tem nenhuma aplicação comercial.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+## Licença de uso
+Este projeto código livre.
 
-## Official Documentation
+## Informações tecnicas:
+* Api: Lumen
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+  ## Instalação
+    ```
+    $ git clone https://github.com/andrelokal1/conta-digital.git
+    
+    # Dentro da pasta conta-digital/ :
+        $ docker-compose up -d --build
+        $ docker exec -it conta-digital_app_1 bash
+        $ composer install
+        $ php artisan migrate
+    
+    # Caso queira criar uma massa de dados:
+        $ php artisan db:seed
+    
+    # Teste Unitario: Dentro da pasta api
+        $ php vendor/bin/phpunit
 
-## Contributing
+    
+    ```
+### Requisitos:
+* docker
+* docker-compose
+* git
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Autor
+    * André Martos - andrelokal@gmail.com
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
 
-## License
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+

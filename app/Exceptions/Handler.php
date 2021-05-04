@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Enums\HttpStatus;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
